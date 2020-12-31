@@ -1,8 +1,9 @@
-version: '3'
+version: "3"
 
 services:
   bot:
-    container_name: 'valorant-discord-bot'
+    container_name: "valorant-discord-bot"
     build: .
     volumes:
-      - './:/usr/src/app'
+      - "./:/usr/src/app"
+      - "/usr/src/app/node_modules"
