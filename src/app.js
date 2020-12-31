@@ -1,20 +1,40 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const { Client } = require('discord.js');
+const { Client } = require("discord.js");
 const client = new Client();
 
-const PREFIX = '!val';
+const buildMessage = require("./buildMessage.js");
 
-client.on('ready', () => {
+const PREFIX = "!val";
+
+client.on("ready", () => {
   console.log(`${client.user.tag} has logged in.`);
 });
 
-client.on('message', (message) => {
-  if (message.author.bot || !message.content.startsWith(PREFIX)) return;
+client.on("message", (message) => {
+  if (
+    message.author.bot ||
+    !message.content.startsWith(PREFIX) ||
+    message.content.trim().length < 5
+  )
+    return;
 
-  const username = message.content.trim().substring(PREFIX.length).split(/\s+/)[1];
+  const [command, ...usernames] = message.content
+    .trim()
+    .substring(PREFIX.length)
+    .match(/[^ ]+/g);
 
-  console.log('username', username);
+  if (usernames.length > 0) {
+    usernames.forEach(async (username) => {
+      const reply = buildMessage({ command, username });
+      message.channel.send(reply);
+    });
+  } else {
+    console.log("HAS NO ARGS");
+
+    const reply = buildMessage({ command: "Stats", username: command });
+    message.channel.send(reply);
+  }
 });
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
