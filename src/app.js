@@ -1,9 +1,10 @@
 require("dotenv").config();
-
+const { isEmpty } = require("lodash");
 const { Client } = require("discord.js");
 const client = new Client();
 
 const buildMessage = require("./buildMessage.js");
+const fetchData = require("./fetchData.js");
 
 const PREFIX = "!val";
 
@@ -11,7 +12,7 @@ client.on("ready", () => {
   console.log(`${client.user.tag} has logged in.`);
 });
 
-client.on("message", (message) => {
+client.on("message", async (message) => {
   if (
     message.author.bot ||
     !message.content.startsWith(PREFIX) ||
@@ -24,15 +25,25 @@ client.on("message", (message) => {
     .substring(PREFIX.length)
     .match(/[^ ]+/g);
 
-  if (usernames.length > 0) {
+  if (!isEmpty(usernames.length)) {
     usernames.forEach(async (username) => {
       const reply = buildMessage({ command, username });
       message.channel.send(reply);
     });
   } else {
-    console.log("HAS NO ARGS");
+    const data = await fetchData(command);
 
-    const reply = buildMessage({ command: "Stats", username: command });
+    if (isEmpty(data)) {
+      const reply = buildMessage({
+        command: "User Not Found",
+        username: command,
+        desc: `The user ${command} could not be found.`,
+      });
+      message.channel.send(reply);
+      return;
+    }
+
+    const reply = buildMessage({ command: "stats", data });
     message.channel.send(reply);
   }
 });
