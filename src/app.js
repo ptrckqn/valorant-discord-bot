@@ -1,35 +1,55 @@
 require('dotenv').config();
 const { isEmpty } = require('lodash');
 const { Client } = require('discord.js');
+const cron = require('cron');
 const client = new Client();
 
 const buildMessage = require('./buildMessage.js');
 const fetchData = require('./fetchData.js');
 
-const PREFIX = '!val';
+const NINE_TO_FIVE_FRIENDS = '761704533972877342';
+const THEY_RACE_ME_SO_HARD = '244925554275385345';
+
+const PREFIX = '!';
 
 client.on('ready', () => {
   console.log(`${client.user.tag} has logged in.`);
+
+  scheduledMove.start();
 });
 
 client.on('message', async (message) => {
-  if (message.author.bot || !message.content.startsWith(PREFIX) || message.content.trim().length < 5) return;
-  const username = encodeURI(message.content.trim().substring(PREFIX.length + 1));
+  if (message.author.bot || !message.content.startsWith(PREFIX)) return;
 
-  const data = await fetchData(username);
+  const [command, ...args] = message.content.trim().substring(PREFIX.length).split(' ');
 
-  if (isEmpty(data)) {
-    const reply = buildMessage({
-      command: 'User Not Found',
-      username,
-      desc: `The user ${username} could not be found.`,
-    });
+  if (command === 'val') {
+    const username = encodeURI(args.join(' '));
+
+    const data = await fetchData(username);
+
+    if (isEmpty(data)) {
+      const reply = buildMessage({
+        command: 'User Not Found',
+        username,
+        desc: `The user ${username} could not be found.`,
+      });
+      message.channel.send(reply);
+      return;
+    }
+
+    const reply = buildMessage({ command: 'stats', data });
     message.channel.send(reply);
-    return;
+  } else if (command === 'move') {
   }
+});
 
-  const reply = buildMessage({ command: 'stats', data });
-  message.channel.send(reply);
+// Move users from channel to other channel at 5:00 mountain time
+const scheduledMove = new cron.CronJob('00 00 * * *', async () => {
+  const channel = await client.channels.fetch(NINE_TO_FIVE_FRIENDS);
+  channel.members.forEach((member) => {
+    member.voice.setChannel(THEY_RACE_ME_SO_HARD);
+  });
 });
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
