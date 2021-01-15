@@ -40,7 +40,6 @@ client.on('message', async (message) => {
 
     const reply = buildMessage({ command: 'stats', data });
     message.channel.send(reply);
-  } else if (command === 'move') {
   }
 });
 
