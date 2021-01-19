@@ -40,6 +40,18 @@ client.on('message', async (message) => {
 
     const reply = buildMessage({ command: 'stats', data });
     message.channel.send(reply);
+  } else if (command === 'vibecheck') {
+    const vibe = Math.floor(Math.random() * 101);
+    let reply = `${message.author.username} is vibing at ${vibe}% efficiency.`;
+
+    if (vibe === 100) {
+      reply += ' Fucking nerd.';
+    } else if (vibe === 69) {
+      reply += ' Nice.';
+    } else if (vibe === 0) {
+      reply += ' What a loser...';
+    }
+    message.channel.send(reply);
   }
 });
 

@@ -19,8 +19,6 @@ const fetchData = async (username) => {
     if (data) {
       const { stats } = data;
 
-      console.log('asdfasdf', stats.rank);
-
       return {
         username: json.data.platformInfo.platformUserHandle,
         timePlayed: stats.timePlayed.displayValue,
