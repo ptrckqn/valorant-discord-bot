@@ -52,6 +52,30 @@ client.on('message', async (message) => {
       reply += ' What a loser...';
     }
     message.channel.send(reply);
+  } else if (command === 'bombbitch') {
+    const users = await getUsersInVoiceChat(message);
+    const presentUsers = users.map(({ user }) => user.username);
+    const selectedUser = presentUsers[Math.floor(Math.random() * presentUsers.length)];
+    message.channel.send(`Congratulations ${selectedUser}, you're the bomb bitch!`);
+  } else if (command === 'cuck') {
+    const users = await getUsersInVoiceChat(message);
+    const presentUsers = users.map(({ user }) => user.username);
+    const selectedUser = presentUsers[Math.floor(Math.random() * presentUsers.length)];
+    message.channel.send(`${selectedUser} is the biggest cuck here.`);
+  } else if (command === 'fuckoff') {
+    const users = await getUsersInVoiceChat(message);
+    const presentUsers = users.map((user) => user);
+    const selectedUser = presentUsers[Math.floor(Math.random() * presentUsers.length)];
+
+    if (selectedUser.user.username === message.author.username) {
+      message.channel.send(`${message.author} is going to fuck off now.`);
+    } else {
+      message.channel.send(`${message.author} thinks ${selectedUser.user.username} is a little bitch and wants them to please fuck off.`);
+    }
+
+    setTimeout(() => {
+      selectedUser.voice.kick();
+    }, 5000);
   }
 });
 
@@ -64,3 +88,8 @@ const scheduledMove = new cron.CronJob('00 00 * * *', async () => {
 });
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
+
+const getUsersInVoiceChat = async (message) => {
+  const voiceChannel = await client.channels.fetch(message.member.voice.channel.id);
+  return voiceChannel.members;
+};
