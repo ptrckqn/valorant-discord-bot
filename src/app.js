@@ -74,7 +74,7 @@ client.on('message', async (message) => {
     }
 
     setTimeout(() => {
-      selectedUser.voice.kick();
+      selectedUser.voice.setChannel(null);
     }, 5000);
   }
 });
