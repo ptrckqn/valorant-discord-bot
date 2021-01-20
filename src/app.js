@@ -70,7 +70,7 @@ client.on('message', async (message) => {
     if (selectedUser.user.username === message.author.username) {
       message.channel.send(`${message.author} is going to fuck off now.`);
     } else {
-      message.channel.send(`${message.author} thinks ${selectedUser.user.username} is a little bitch and wants them to please fuck off.`);
+      message.channel.send(`${message.author} thinks @${selectedUser.user.username} is a little bitch and wants them to please fuck off.`);
     }
 
     setTimeout(() => {
