@@ -45,11 +45,11 @@ client.on('message', async (message) => {
     let reply = `${message.author.username} is vibing at ${vibe}% efficiency.`;
 
     if (vibe === 100) {
-      reply += ' Fucking nerd.';
+      reply = `${message.author.username}'s vibe level is over 9000!`;
     } else if (vibe === 69) {
-      reply += ' Nice.';
+      reply += ' :eyes:';
     } else if (vibe === 0) {
-      reply += ' What a loser...';
+      reply += ' sadge...';
     }
     message.channel.send(reply);
   } else if (command === 'bombbitch') {
