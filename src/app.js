@@ -49,7 +49,7 @@ client.on('message', async (message) => {
     } else if (vibe === 69) {
       reply += ' :eyes:';
     } else if (vibe === 0) {
-      reply += ' sadge...';
+      reply = `${message.author.username} is all vibed out. It's been nice knowing you...`;
 
       setTimeout(() => {
         message.member.voice.setChannel(null);
