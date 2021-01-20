@@ -62,20 +62,6 @@ client.on('message', async (message) => {
     const presentUsers = users.map(({ user }) => user.username);
     const selectedUser = presentUsers[Math.floor(Math.random() * presentUsers.length)];
     message.channel.send(`${selectedUser} is the biggest cuck here.`);
-  } else if (command === 'fuckoff') {
-    const users = await getUsersInVoiceChat(message);
-    const presentUsers = users.map((user) => user);
-    const selectedUser = presentUsers[Math.floor(Math.random() * presentUsers.length)];
-
-    if (selectedUser.user.username === message.author.username) {
-      message.channel.send(`${message.author} is going to fuck off now.`);
-    } else {
-      message.channel.send(`${message.author} thinks @${selectedUser.user.username} is a little bitch and wants them to please fuck off.`);
-    }
-
-    setTimeout(() => {
-      selectedUser.voice.setChannel(null);
-    }, 5000);
   }
 });
 
