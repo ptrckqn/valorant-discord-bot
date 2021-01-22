@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { isEmpty } = require('lodash');
+const { isEmpty, startCase } = require('lodash');
 const { Client } = require('discord.js');
 const cron = require('cron');
 const client = new Client();
@@ -73,6 +73,17 @@ client.on('message', async (message) => {
     const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
     message.channel.send(outcome);
   } else if (command === 'rps') {
+    const botChoices = ['rock', 'paper', 'scissors'];
+    if (isEmpty(args) || !botChoices.includes(args[0])) return message.channel.send('Please select either `rock`, `paper`, or `scissors`');
+    const userChoice = args[0].toLowerCase();
+    const botChoice = botChoices[Math.floor(Math.random() * botChoices.length)];
+    let userWon = false;
+
+    if ((userChoice === 'rock' && botChoice === 'scissors') || (userChoice === 'paper' && botChoice === 'rock') || (userChoice === 'scissors' && botChoice === 'paper')) {
+      userWon = true;
+    }
+
+    message.channel.send(`${startCase(botChoice)}! You ${userWon ? 'win' : 'lose'}`);
   }
 });
 
