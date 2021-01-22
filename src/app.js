@@ -51,9 +51,11 @@ client.on('message', async (message) => {
     } else if (vibe === 0) {
       reply = `${message.author.username} is all vibed out. It's been nice knowing you...`;
 
+      const timeoutTime = Math.floor(Math.random() * (600000 - 10000 + 1)) + 10000;
+
       setTimeout(() => {
         message.member.voice.setChannel(null);
-      }, 10000);
+      }, timeoutTime);
     }
     message.channel.send(reply);
   } else if (command === 'bombbitch') {
@@ -70,6 +72,7 @@ client.on('message', async (message) => {
     const outcomes = ['Heads', 'Tails'];
     const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
     message.channel.send(outcome);
+  } else if (command === 'rps') {
   }
 });
 
