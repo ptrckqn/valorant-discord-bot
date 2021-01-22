@@ -78,12 +78,15 @@ client.on('message', async (message) => {
     const userChoice = args[0].toLowerCase();
     const botChoice = botChoices[Math.floor(Math.random() * botChoices.length)];
     let userWon = false;
+    let tie = false;
 
     if ((userChoice === 'rock' && botChoice === 'scissors') || (userChoice === 'paper' && botChoice === 'rock') || (userChoice === 'scissors' && botChoice === 'paper')) {
       userWon = true;
+    } else if (userChoice === botChoice) {
+      tie = true;
     }
 
-    message.channel.send(`${startCase(botChoice)}! You ${userWon ? 'win' : 'lose'}`);
+    message.channel.send(`${startCase(botChoice)}! ${tie ? "It's a tie." : `You ${userWon ? 'win.' : 'lose.'}`}`);
   }
 });
 
