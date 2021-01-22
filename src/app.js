@@ -74,7 +74,7 @@ client.on('message', async (message) => {
     message.channel.send(outcome);
   } else if (command === 'rps') {
     const botChoices = ['rock', 'paper', 'scissors'];
-    if (isEmpty(args) || !botChoices.includes(args[0])) return message.channel.send('Please select either `rock`, `paper`, or `scissors`');
+    if (isEmpty(args) || !botChoices.includes(args[0]).toLowerCase()) return message.channel.send('Please select either `rock`, `paper`, or `scissors`');
     const userChoice = args[0].toLowerCase();
     const botChoice = botChoices[Math.floor(Math.random() * botChoices.length)];
     let userWon = false;
