@@ -66,6 +66,10 @@ client.on('message', async (message) => {
     const presentUsers = users.map(({ user }) => user.username);
     const selectedUser = presentUsers[Math.floor(Math.random() * presentUsers.length)];
     message.channel.send(`${selectedUser} is the biggest cuck here.`);
+  } else if (command === 'coinflip') {
+    const outcomes = ['Heads', 'Tails'];
+    const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+    message.channel.send(outcome);
   }
 });
 
