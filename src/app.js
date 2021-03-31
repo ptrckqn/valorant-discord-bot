@@ -97,6 +97,8 @@ client.on('message', async (message) => {
       console.log('friday.mp3 has finished playing!');
       connection.disconnect();
     });
+
+    dispatcher.on('error', console.error);
   }
 });
 
