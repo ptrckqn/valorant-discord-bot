@@ -87,6 +87,16 @@ client.on('message', async (message) => {
     }
 
     message.channel.send(`${startCase(botChoice)}! ${tie ? "It's a tie." : `You ${userWon ? 'win.' : 'lose.'}`}`);
+  } else if (command === 'friday' && message.member.voice.channel) {
+    const connection = await message.member.voice.channel.join();
+    const dispatcher = connection.play('../assets/audio/friday.mp3', { volume: 0.5 });
+    dispatcher.on('start', () => {
+      console.log('friday.mp3 is now playing!');
+    });
+    dispatcher.on('finish', () => {
+      console.log('friday.mp3 has finished playing!');
+      connection.disconnect();
+    });
   }
 });
 
