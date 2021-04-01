@@ -88,9 +88,9 @@ client.on('message', async (message) => {
 
     message.channel.send(`${startCase(botChoice)}! ${tie ? "It's a tie." : `You ${userWon ? 'win.' : 'lose.'}`}`);
   } else if (command === 'friday' && message.member.voice.channel) {
-    playAudio('friday.mp3');
+    playAudio(message, 'friday.mp3');
   } else if (command === 'popoff' && message.member.voice.channel) {
-    playAudio('popoff.mp3');
+    playAudio(message, 'popoff.mp3');
   }
 });
 
