@@ -93,6 +93,8 @@ client.on('message', async (message) => {
     playAudio(message, 'whoami.mp3');
   } else if (command === 'whobitch' && message.member.voice.channel) {
     playAudio(message, 'whobitch.mp3');
+  } else if (command === 'ily' && message.member.voice.channel) {
+    playAudio(message, 'ily.mp3');
   }
 });
 
