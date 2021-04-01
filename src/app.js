@@ -88,9 +88,9 @@ client.on('message', async (message) => {
 
     message.channel.send(`${startCase(botChoice)}! ${tie ? "It's a tie." : `You ${userWon ? 'win.' : 'lose.'}`}`);
   } else if (command === 'friday' && message.member.voice.channel) {
-    playAudio("friday.mp3")
-  } else if(command === 'popoff' && message.member.voice.channel){
-    playAudio("popoff.mp3")
+    playAudio('friday.mp3');
+  } else if (command === 'popoff' && message.member.voice.channel) {
+    playAudio('popoff.mp3');
   }
 });
 
@@ -109,7 +109,7 @@ const getUsersInVoiceChat = async (message) => {
   return voiceChannel.members;
 };
 
-const playAudio = (message, filename) => {
+const playAudio = async (message, filename) => {
   const connection = await message.member.voice.channel.join();
   const dispatcher = connection.play(require('path').join(__dirname, `./assets/${filename}`), { volume: 0.5 });
   dispatcher.on('start', () => {
@@ -121,4 +121,4 @@ const playAudio = (message, filename) => {
   });
 
   dispatcher.on('error', console.error);
-}
+};
