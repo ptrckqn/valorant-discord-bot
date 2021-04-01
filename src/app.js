@@ -88,17 +88,9 @@ client.on('message', async (message) => {
 
     message.channel.send(`${startCase(botChoice)}! ${tie ? "It's a tie." : `You ${userWon ? 'win.' : 'lose.'}`}`);
   } else if (command === 'friday' && message.member.voice.channel) {
-    const connection = await message.member.voice.channel.join();
-    const dispatcher = connection.play(require('path').join(__dirname, './assets/friday.mp3'), { volume: 0.5 });
-    dispatcher.on('start', () => {
-      console.log('friday.mp3 is now playing!');
-    });
-    dispatcher.on('finish', () => {
-      console.log('friday.mp3 has finished playing!');
-      connection.disconnect();
-    });
-
-    dispatcher.on('error', console.error);
+    playAudio("friday.mp3")
+  } else if(command === 'popoff' && message.member.voice.channel){
+    playAudio("popoff.mp3")
   }
 });
 
@@ -116,3 +108,17 @@ const getUsersInVoiceChat = async (message) => {
   const voiceChannel = await client.channels.fetch(message.member.voice.channel.id);
   return voiceChannel.members;
 };
+
+const playAudio = (message, filename) => {
+  const connection = await message.member.voice.channel.join();
+  const dispatcher = connection.play(require('path').join(__dirname, `./assets/${filename}`), { volume: 0.5 });
+  dispatcher.on('start', () => {
+    console.log(`${filename} is now playing!`);
+  });
+  dispatcher.on('finish', () => {
+    console.log(`${filename} has finished playing!`);
+    connection.disconnect();
+  });
+
+  dispatcher.on('error', console.error);
+}
