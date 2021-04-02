@@ -10,6 +10,8 @@ const fetchData = require('./fetchData.js');
 const NINE_TO_FIVE_FRIENDS = '761704533972877342';
 const THEY_RACE_ME_SO_HARD = '244925554275385345';
 
+const NINE_TO_FIVE_ROLE = '775781327357739028';
+
 const PREFIX = '!';
 
 client.on('ready', () => {
@@ -97,6 +99,14 @@ client.on('message', async (message) => {
     playAudio(message, 'ily.mp3');
   } else if (command === 'boom' && message.member.voice.channel) {
     playAudio(message, 'boom.mp3');
+  }
+});
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+  if (newState.member.user.bot) return;
+  if (newState.channelID && !newState.member.roles.cache.keyArray().includes(NINE_TO_FIVE_ROLE)) {
+    // User joins channel
+    playAudio(newState, 'whobitch.mp3');
   }
 });
 
