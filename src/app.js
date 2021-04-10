@@ -104,7 +104,8 @@ client.on('message', async (message) => {
 
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (newState.member.user.bot) return;
-  if (newState.channelID && !newState.member.roles.cache.keyArray().includes(NINE_TO_FIVE_ROLE)) {
+
+  if (newState.channelID && oldState.channelID !== newState.channelID && !newState.member.roles.cache.keyArray().includes(NINE_TO_FIVE_ROLE)) {
     // User joins channel
     playAudio(newState, 'whobitch.mp3');
   }
